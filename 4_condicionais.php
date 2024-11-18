@@ -1,19 +1,21 @@
 <?php
 
-// Verificar os dados do formulario 
-// Utilizando o metodo POST
-
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Verificar os dados do formulário
+//Utilizando o método POST
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $senha = $_POST['senha'];
 
-    if($senha === '12345'){
-        // redireciona para a pagina de 'boas vindas'
+    if($senha === '1234567'){
+        //redireciona para a pagina de 'boas vindas'
         header("Location:4b_bem_vindo.php");
+        
         exit();
+    }else{
+        
+        // mensagem de erro
+        $erro = "Senha incorreta. Tente novamente!";
     }
-}else{
-    $erro = "senha ta errada man👍";
 }
 
 ?>
@@ -25,6 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <h2>Digite a senha para continuar:</h2>
+    
     <form method="post" action="">
         <label for="senha">Senha:</label>
         <input type="password" name="senha" required><br>
@@ -33,13 +36,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <?php
 
-    // Exibe a mensagem de erro
     if(isset($erro)){
-        echo "<p style='color: red;'>$erro</p>";
+        echo "<p style='color:red'>$erro</p>";
     }
 
     ?>
 </body>
 </html>
-
-
