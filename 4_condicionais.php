@@ -1,6 +1,20 @@
 <?php
 
-// Digitar PHP (1º Aqui)
+// Verificar os dados do formulario 
+// Utilizando o metodo POST
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $senha = $_POST['senha'];
+
+    if($senha === '12345'){
+        // redireciona para a pagina de 'boas vindas'
+        header("Location:4b_bem_vindo.php");
+        exit();
+    }
+}else{
+    $erro = "senha ta errada man👍";
+}
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +33,10 @@
 
     <?php
 
-    // Digitar PHP (2º Aqui)
+    // Exibe a mensagem de erro
+    if(isset($erro)){
+        echo "<p style='color: red;'>$erro</p>";
+    }
 
     ?>
 </body>
