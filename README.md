@@ -307,8 +307,60 @@
      }
   ```
 * 13:
-  
+  Na atividade número13 foi é usado para a exclução do usuario dacastrado
+  ```PHP
+  // Verifica se um ID foi passado via URL para exclusão
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        // Deleta o registro do cliente com o ID especificado 
+        $sql = "DELETE FROM clientes WHERE id='$id'";
+        if ($conn->query($sql) === TRUE) {
+        echo "<p>Cliente excluído com sucesso!</p>";
+        } else {
+        echo "<p>Erro ao excluir cliente: ". $conn->error. "</p>";
+        }
+    }
+  ```
 * 14:
-  
+  Na ativiadade número14 esse site faz o upload de uma imagem e a mostra ela no proprio site
+  ```PHP
+  // Verifica se o formulario foi enviado
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $diretorio_destino = 'uploads/';
+
+        // Verifica de a pasta existe, caso não, ele cria a pasta
+        if (!is_dir($diretorio_destino)) {
+            mkdir($diretorio_destino, 0777, true);
+        }
+
+        $nome_arquivo = basename($_FILES['imagem']['name']);
+        $caminho_completo = $diretorio_destino . $nome_arquivo;
+
+
+        // Move o arquivo enviado para o diretório de destino
+        if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminho_completo)) {
+            echo "<p>Upload realizado com sucesso!</p>";
+            echo "<img src='$caminho_completo' alt='Imagem enviada' style='max-width: 300px;'>";
+        } else {
+            echo "<p>Erro ao fazer upload do arquivo.</p>";
+        }
+    }
+  ```
 * 15:
-  
+  Na atividade número15 é um login onde você deve colocar uma senha e login pré-determinado que redireciona para outra pagina caso estejá certo o login e nesta pagina é possivel fazer o logout
+  ```PHP
+  // Verifica se o formulario foi enviado
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $usuario = $_POST['usuario'];
+    $senha = $_POST['senha'];
+
+    // Verifica se os dados são válidos (usuario: admin, senha: 123)
+    if ($usuario == 'gabs' && $senha == '123') {
+        $_SESSION['usuario'] = $usuario; //Salva o nome do usuario na sessao
+        header("Location: 15b_restrita.php");
+        exit();
+    } else {
+        $erro = "Usuario ou senha incorretos.";
+    }
+}
+  ```
