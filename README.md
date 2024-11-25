@@ -217,9 +217,95 @@
     }
   ```
 * 11:
-  
+  Na atividade número11 foi feito uma lista com os nomes, ids e etc dos usuarios cadastrados no exercicios anterior
+  ```PHP
+  // Conecta ao banco de dados
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "exercicio";
+
+  $conn = new mysqli($servername, $username, $password, $dbname);
+
+  // Verifica a conexão
+  if ($conn->connect_error) {
+    die("Falha na conexão: " . $conn->connect_error);
+  }
+
+  // Consulta os dados da tabela clientes
+  $sql = "SELECT id, nome, email, telefone FROM clientes"; $result = $conn->query($sql);
+
+  // Verifica se existem registros e os exibe em formato de tabela 
+  if ($result->num_rows > 0) { 
+    echo "<h2>Lista de clientes cadastrados</h2>";
+
+    // define formato da tabela 
+    echo "<table border='2'>";
+
+        // define cabeçalho da tabela 
+        echo "<tr><th>Nome</th><th>Email</th><th>Telefone</th></tr>";
+
+        // enquando tiver dados preenchidos no BD
+        // listar e exibir em formato de tabela 
+        while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>".$row['nome']."</td>";
+        echo "<td>".$row['email']."</td>";
+        echo "<td>".$row['telefone']."</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+  } else {
+  echo "Nenhum cliente encontrado.";
+  }
+  $conn->close();
+  ```
 * 12:
-  
+  Na atividade número12 é possivel atuzaliar as informações já cadastradas na atividade 10
+  ```PHP
+  // Conecta ao banco de dados
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "exercicio";
+
+  $conn = new mysqli($servername, $username, $password, $dbname);
+
+  // Verifica a conexão
+  if ($conn->connect_error) {
+    die("Falha na conexão: " . $conn->connect_error);
+  }
+
+  // Inicializa a variável $cliente como null
+  $cliente = null;
+
+  // Verifica se um ID foi passado via URL para edição
+  if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM clientes WHERE id='$id'";
+    $result = $conn->query($sql);
+
+    // Verifica se encontrou um registro no banco de dados
+    if ($result->num_rows > 0) {
+        $cliente = $result->fetch_assoc();
+    } else {
+        echo "Cliente não encontrado.";
+        exit();
+    }
+  }
+  // Verifica se o formulário foi enviado para atualizar o cliente 
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $sql = "UPDATE clientes SET nome='$nome', email='$email' WHERE id='$id'";
+    if ($conn->query($sql) === TRUE) {
+    echo "<p>Cliente atualizado com sucesso!</p>";
+    } else {
+    echo "<p>Erro ao atualizar cliente: " . $conn->error. "</p>";
+    }
+     }
+  ```
 * 13:
   
 * 14:
